@@ -53,8 +53,8 @@ public class Bullet : NetworkBehaviour
     }
 
     public float Rotate {
-        set { CmdRotate(value); }
-        //set { transform.Rotate(new Vector3(0.0f, 0.0f, value)); }
+        // set { CmdRotate(value); }
+        set { transform.Rotate(new Vector3(0.0f, 0.0f, value)); }
     }
 
     void OnDestroy()
@@ -72,7 +72,7 @@ public class Bullet : NetworkBehaviour
     // Use this for initialization
     private void Start()
     {
-        CmdSpawn();
+        // CmdSpawn();
 
         _transform = this.transform;
         _boxCollider = this.GetComponent<BoxCollider2D>();
@@ -125,10 +125,11 @@ public class Bullet : NetworkBehaviour
             }
         }
 
-        transform.Translate(_velocity * Time.deltaTime);
+        _transform.Translate(_velocity * Time.deltaTime);
     }
 
-    public void ResetBullet()
+    [Command]
+    public void CmdResetBullet()
     {
         _transform.position = Vector3.zero;
         _direction = Vector2.zero;
@@ -138,7 +139,7 @@ public class Bullet : NetworkBehaviour
     [Command]
     private void CmdMove(Vector2 velocity, float deltaTime)
     {
-        transform.Translate(_velocity * Time.deltaTime);
+        _transform.Translate(_velocity * Time.deltaTime);
     }
 
     [Command]

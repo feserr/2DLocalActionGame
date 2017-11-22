@@ -88,7 +88,7 @@ public class NetworkController2D : NetworkBehaviour
         if (Input.GetButtonDown(PC2D.Input.JUMP) ||
             CrossPlatformInputManager.GetButtonDown("Jump"))
         {
-            _motor.Jump();
+            // _motor.Jump();
             _joystickRight.SetImage(false);
             CmdDoJump();
         }
@@ -101,12 +101,12 @@ public class NetworkController2D : NetworkBehaviour
            (CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYVERTICAL) <
             -PC2D.Globals.FAST_FALL_THRESHOLD))
         {
-            _motor.fallFast = true;
+            // _motor.fallFast = true;
             CmdFallFast(true);
         }
         else
         {
-            _motor.fallFast = false;
+            // _motor.fallFast = false;
             CmdFallFast(false);
         }
 
@@ -120,18 +120,24 @@ public class NetworkController2D : NetworkBehaviour
                 CrossPlatformInputManager.GetAxis(GameGlobals.RIGHTJOYVERTICAL));
 
             CmdFire(joystick, false);
-            Fire(joystick, false);
+            if (isClient)
+            {
+                Fire(joystick, false);
+            }
         }
 
         if (Input.GetButtonDown(PC2D.Input.FIRE))
         {
             CmdFire(new Vector2(1.0f, 0.0f), true);
-            //Fire(new Vector2(1.0f, 0.0f), true);
+            if (isClient)
+            {
+                Fire(new Vector2(1.0f, 0.0f), true);
+            }
         }
 
         if (Input.GetButtonDown(PC2D.Input.DASH))
         {
-            _motor.Dash();
+            // _motor.Dash();
             CmdDoDash();
         }
 
@@ -186,23 +192,6 @@ public class NetworkController2D : NetworkBehaviour
     {
         if (++_fireCooldown % 10 == 0 || keyboard)
         {
-            //GameObject bullet = new GameObject("Bullet");
-            // GameObject bulletClone = (GameObject)Instantiate(_bullet);
-            // bulletClone.AddComponent<NetworkIdentity>();
-
-            // ClientScene.RegisterPrefab(bulletClone);
-
-            // bulletClone.transform.position = _playerTransform.position;
-            // Bullet bulletScript = bulletClone.AddComponent<Bullet>();
-            // bulletScript.direction = direction;
-
-            // // Rotate the x axis
-            // bulletScript.Rotate =
-            //     direction.x * (direction.x > 0.0f ? 0.0f : -180.0f);
-            // // Rotate the y axis
-            // bulletScript.Rotate =
-            //     direction.y * (direction.x > 0.0f ? 90.0f : -90.0f);
-
             GameObject obj = _bulletPoll.GetComponent<PoolSystem>().GetObject();
             obj.SetActive(true);
 
@@ -218,7 +207,7 @@ public class NetworkController2D : NetworkBehaviour
             bulletScript.Rotate =
                 direction.y * (direction.x > 0.0f ? 90.0f : -90.0f);
 
-            StartCoroutine(ResetBullet(5.0f, obj, bulletScript));
+            StartCoroutine(ResetBullet(5.0f, obj));
         }
     }
 
@@ -226,25 +215,22 @@ public class NetworkController2D : NetworkBehaviour
     {
         if (++_fireCooldown % 10 == 0 || keyboard)
         {
-            //GameObject bullet = new GameObject("Bullet");
-            // GameObject bulletClone = (GameObject)Instantiate(_bullet);
-            // bulletClone.AddComponent<NetworkIdentity>();
+            GameObject obj = _bulletPoll.GetComponent<PoolSystem>().GetObject();
+            obj.SetActive(true);
 
-            // //ClientScene.RegisterPrefab(bulletClone);
+            obj.transform.position = _playerTransform.transform.position;
 
-            // bulletClone.transform.position = _playerTransform.position;
-            // Bullet bulletScript = bulletClone.AddComponent<Bullet>();
-            // bulletScript.direction = direction;
+            Bullet bulletScript = obj.GetComponent<Bullet>();
+            bulletScript.direction = direction;
 
-            // // Rotate the x axis
-            // bulletScript.Rotate =
-            //     direction.x * (direction.x > 0.0f ? 0.0f : -180.0f);
-            // // Rotate the y axis
-            // bulletScript.Rotate =
-            //     direction.y * (direction.x > 0.0f ? 90.0f : -90.0f);
+            // Rotate the x axis
+            bulletScript.Rotate =
+                direction.x * (direction.x > 0.0f ? 0.0f : -180.0f);
+            // Rotate the y axis
+            bulletScript.Rotate =
+                direction.y * (direction.x > 0.0f ? 90.0f : -90.0f);
 
-            // //CmdAddBullet(bulletClone);
-            // ClientScene.RegisterPrefab(bulletClone);
+            StartCoroutine(ResetBullet(5.0f, obj));
         }
     }
 
@@ -261,11 +247,21 @@ public class NetworkController2D : NetworkBehaviour
         syncPos = latestPos;
     }
 
-    private IEnumerator ResetBullet(float time, GameObject obj, Bullet script)
+    private IEnumerator ResetBullet(float time, GameObject obj)
     {
         yield return new WaitForSeconds(time);
 
-        script.ResetBullet();
+        // CmdReset(obj);
+        Bullet script = obj.GetComponent<Bullet>();
+        script.CmdResetBullet();
+        _bulletPoll.GetComponent<PoolSystem>().DestroyObjectPool(obj);
+    }
+
+    [Command]
+    void CmdReset(GameObject obj)
+    {
+        Bullet script = obj.GetComponent<Bullet>();
+        script.CmdResetBullet();
         _bulletPoll.GetComponent<PoolSystem>().DestroyObjectPool(obj);
     }
 }
