@@ -9,14 +9,22 @@ public class LantencyLog : MonoBehaviour {
 
     void OnGUI()
     {
-        GUILayout.Label("Player ping values");
-        int i = 0;
+        GUILayout.BeginHorizontal();
+        GUILayout.Space(10f);
+            GUILayout.BeginVertical();
+            GUILayout.Label("Player ping values");
+            int i = 0;
 
-		while (i < Network.connections.Length)
-		{
-            GUILayout.Label("Player " + Network.connections[i] + " - " +
-				Network.GetAveragePing(Network.connections[i]) + " ms");
-            i++;
-        }
+		    while (i < Network.connections.Length)
+		    {
+                GUILayout.Space(10f);
+                GUILayout.Label("Player " + Network.connections[i] + " - " +
+                    Network.GetAveragePing(Network.connections[i]) + " ms");
+
+                i++;
+            }
+
+            GUILayout.EndVertical();
+        GUILayout.EndHorizontal();
     }
 }

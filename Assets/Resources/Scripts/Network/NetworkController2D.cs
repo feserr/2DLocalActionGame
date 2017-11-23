@@ -65,31 +65,39 @@ public class NetworkController2D : NetworkBehaviour
         if (Mathf.Abs(Input.GetAxis(PC2D.Input.HORIZONTAL)) >
             PC2D.Globals.INPUT_THRESHOLD)
         {
-            _motor.normalizedXMovement = Input.GetAxis(PC2D.Input.HORIZONTAL);
+            //_motor.normalizedXMovement = Input.GetAxis(PC2D.Input.HORIZONTAL);
             _dx = Input.GetAxis(PC2D.Input.HORIZONTAL);
         }
         else if (Mathf.Abs(
             CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYHORIZONTAL)) >
                 GameGlobals.JOY_THRESHOLD)
         {
-            _motor.normalizedXMovement =
-                CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYHORIZONTAL);
+            //_motor.normalizedXMovement =
+            //    CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYHORIZONTAL);
             _dx = CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYHORIZONTAL);
         }
         else
         {
-            _motor.normalizedXMovement = 0;
+            //_motor.normalizedXMovement = 0;
             _dx = 0;
         }
 
+        if (isClient)
+        {
+            _motor.normalizedXMovement = _dx;
+        }
         CmdHorizontalMovement(_dx);
 
         // Jump?
         if (Input.GetButtonDown(PC2D.Input.JUMP) ||
             CrossPlatformInputManager.GetButtonDown("Jump"))
         {
-            // _motor.Jump();
             _joystickRight.SetImage(false);
+
+            if (isClient)
+            {
+                _motor.Jump();
+            }
             CmdDoJump();
         }
 
@@ -101,12 +109,18 @@ public class NetworkController2D : NetworkBehaviour
            (CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYVERTICAL) <
             -PC2D.Globals.FAST_FALL_THRESHOLD))
         {
-            // _motor.fallFast = true;
+            if (isClient)
+            {
+                _motor.fallFast = true;
+            }
             CmdFallFast(true);
         }
         else
         {
-            // _motor.fallFast = false;
+            if (isClient)
+            {
+                _motor.fallFast = false;
+            }
             CmdFallFast(false);
         }
 
