@@ -21,7 +21,7 @@ public class ScreenRecorder : MonoBehaviour
         Destroy(this);
 #endif
 
-        // If you want to change Recorder settings at runtime, use :
+        // If you want to change Recorder settings at runtime, use
         //m_Recorder.Setup(autoAspect, width, height, fps, bufferSize, repeat, quality);
 
         // The Recorder starts paused for performance reasons, call Record() to start

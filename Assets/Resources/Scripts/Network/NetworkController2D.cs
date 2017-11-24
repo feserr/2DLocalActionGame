@@ -16,6 +16,8 @@ public class NetworkController2D : NetworkBehaviour
     [SyncVar(hook = "SyncPositionValues")]
     private Vector3 syncPos;
 
+    private Queue pendingMoves;
+
     private Transform _playerTransform;
     private PlatformerMotor2D _motor;
     private Joystick _joystickRight;
@@ -25,7 +27,7 @@ public class NetworkController2D : NetworkBehaviour
     private int _fireCooldown = 0;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         _playerTransform = GetComponent<Transform>();
         _motor = GetComponent<PlatformerMotor2D>();
@@ -61,7 +63,10 @@ public class NetworkController2D : NetworkBehaviour
     void UpdateClient()
     {
         if (!isLocalPlayer)
+        {
+            pendingMoves = new Queue();
             return;
+        }
 
         if (Mathf.Abs(Input.GetAxis(PC2D.Input.HORIZONTAL)) >
             PC2D.Globals.INPUT_THRESHOLD)
