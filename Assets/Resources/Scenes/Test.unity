@@ -123,7 +123,6 @@ GameObject:
   - component: {fileID: 306403629}
   - component: {fileID: 306403628}
   - component: {fileID: 306403627}
-  - component: {fileID: 306403631}
   m_Layer: 5
   m_Name: LeftMobileJoystick
   m_TagString: Untagged
@@ -140,15 +139,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 306403626}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d60f503d474a9a74891441073ea8aeb7, type: 3}
+  m_Script: {fileID: 11500000, guid: 00c3c865782347f41b6358d9fba14b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementRange: 100
+  MovementRange: 50
   axesToUse: 0
-  joystickSide: 0
   horizontalAxisName: LeftJoystickHorizontal
   verticalAxisName: LeftJoystickVertical
-  m_currentTouchIDLeft: 0
 --- !u!114 &306403628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +189,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 306403626}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -145, y: -100, z: 0}
+  m_LocalPosition: {x: -185, y: -60.992996, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 822910405}
@@ -200,24 +197,25 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -145, y: -100}
+  m_AnchoredPosition: {x: -185, y: -60.993}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &306403631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 306403626}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9675fe03d22885d4b85cdfcf2a023a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &505635867 stripped
+--- !u!1 &505635867
 GameObject:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 100000, guid: 81154777d5417884981849c5243f6c01, type: 2}
   m_PrefabInternal: {fileID: 1175678805}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1175678806}
+  - component: {fileID: 505635868}
+  m_Layer: 0
+  m_Name: FramerateCounter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!114 &505635868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,7 +239,6 @@ GameObject:
   - component: {fileID: 676369063}
   - component: {fileID: 676369062}
   - component: {fileID: 676369061}
-  - component: {fileID: 676369065}
   m_Layer: 5
   m_Name: JumpButton
   m_TagString: Untagged
@@ -257,7 +254,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 676369059}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 140, y: -94, z: 0}
+  m_LocalPosition: {x: 0, y: -85.102036, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1636198639}
@@ -266,7 +263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -100, y: 50}
+  m_AnchoredPosition: {x: -240, y: 50}
   m_SizeDelta: {x: 150, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676369061
@@ -399,17 +396,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 676369059}
---- !u!114 &676369065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 676369059}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9675fe03d22885d4b85cdfcf2a023a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &738746015
 Prefab:
   m_ObjectHideFlags: 0
@@ -482,6 +468,10 @@ Prefab:
       value: 
       objectReference: {fileID: 1885107376873078, guid: ca35f4eb5db562b4997711d2a2a969ef,
         type: 2}
+    - target: {fileID: 11454246, guid: 228df806f46a94ce7bb87e1f11c25c5d, type: 2}
+      propertyPath: m_SpawnPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 228df806f46a94ce7bb87e1f11c25c5d, type: 2}
   m_IsPrefabParent: 0
@@ -562,8 +552,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 822910401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 400, y: 240, z: 0}
-  m_LocalScale: {x: 1.6666666, y: 1.6666666, z: 1.6666666}
+  m_LocalPosition: {x: 294, y: 165.5, z: 0}
+  m_LocalScale: {x: 1.225, y: 1.225, z: 1.225}
   m_Children:
   - {fileID: 1097935085}
   - {fileID: 306403630}
@@ -608,7 +598,6 @@ GameObject:
   - component: {fileID: 1097935088}
   - component: {fileID: 1097935087}
   - component: {fileID: 1097935086}
-  - component: {fileID: 1097935089}
   m_Layer: 5
   m_Name: RightMobileJoystick
   m_TagString: Untagged
@@ -624,7 +613,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1097935084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 145, y: -100, z: 0}
+  m_LocalPosition: {x: 185, y: -60.992996, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 822910405}
@@ -632,27 +621,24 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 145, y: -100}
+  m_AnchoredPosition: {x: 185, y: -60.993}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1097935086
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400008, guid: 9529ecc3d479da5499993355e6c2cb4f,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1097935084}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c602a906b540bc84c85621a3f6b8fc4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 00c3c865782347f41b6358d9fba14b48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementRange: 100
+  MovementRange: 50
   axesToUse: 0
-  joystickSide: 1
   horizontalAxisName: RightJoystickHorizontal
   verticalAxisName: RightJoystickVertical
-  m_currentTouchIDRight: 0
 --- !u!114 &1097935087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -688,17 +674,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1097935084}
---- !u!114 &1097935089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1097935084}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9675fe03d22885d4b85cdfcf2a023a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1175678805
 Prefab:
   m_ObjectHideFlags: 0
@@ -755,10 +730,19 @@ Prefab:
     - {fileID: 13200000, guid: 81154777d5417884981849c5243f6c01, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 81154777d5417884981849c5243f6c01, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1175678806 stripped
+--- !u!4 &1175678806
 Transform:
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 400000, guid: 81154777d5417884981849c5243f6c01, type: 2}
   m_PrefabInternal: {fileID: 1175678805}
+  m_GameObject: {fileID: 505635867}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1416131321}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1281360513
 GameObject:
   m_ObjectHideFlags: 0

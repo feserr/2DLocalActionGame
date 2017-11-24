@@ -128,6 +128,13 @@ public class Bullet : NetworkBehaviour
         _transform.Translate(_velocity * Time.deltaTime);
     }
 
+    public void ResetBullet()
+    {
+        _transform.position = Vector3.zero;
+        _direction = Vector2.zero;
+        Rotate = 0.0f;
+    }
+
     [Command]
     public void CmdResetBullet()
     {

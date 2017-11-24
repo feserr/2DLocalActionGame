@@ -18,7 +18,7 @@ public class NetworkController2D : NetworkBehaviour
 
     private Transform _playerTransform;
     private PlatformerMotor2D _motor;
-    private JoystickRight _joystickRight;
+    private Joystick _joystickRight;
     private float _dx = 0.0f;
     private GameObject _bulletPoll;
 
@@ -30,7 +30,7 @@ public class NetworkController2D : NetworkBehaviour
         _playerTransform = GetComponent<Transform>();
         _motor = GetComponent<PlatformerMotor2D>();
         _joystickRight = GameObject.Find("RightMobileJoystick")
-            .GetComponent<JoystickRight>();
+            .GetComponent<Joystick>();
 
         _bulletPoll = new GameObject("BulletPoll");
         _bulletPoll.AddComponent<PoolSystem>();
@@ -52,8 +52,9 @@ public class NetworkController2D : NetworkBehaviour
 
     void UpdateServer()
     {
-        transform.position = Vector3.Lerp(transform.position, syncPos,
-            Time.deltaTime * 15);
+        transform.position = syncPos;
+        // transform.position = Vector3.Lerp(transform.position, syncPos,
+        //     Time.deltaTime * 15);
     }
 
     [ClientCallback]
@@ -85,6 +86,9 @@ public class NetworkController2D : NetworkBehaviour
         if (isClient)
         {
             _motor.normalizedXMovement = _dx;
+        } else if (isServer)
+        {
+            RpcHorizontalMovement(_dx);
         }
         CmdHorizontalMovement(_dx);
 
@@ -92,7 +96,7 @@ public class NetworkController2D : NetworkBehaviour
         if (Input.GetButtonDown(PC2D.Input.JUMP) ||
             CrossPlatformInputManager.GetButtonDown("Jump"))
         {
-            _joystickRight.SetImage(false);
+            // _joystickRight.SetImage(false);
 
             if (isClient)
             {
@@ -137,6 +141,8 @@ public class NetworkController2D : NetworkBehaviour
             if (isClient)
             {
                 Fire(joystick, false);
+            } else if (isServer) {
+                RpcFire(joystick, false);
             }
         }
 
@@ -146,12 +152,17 @@ public class NetworkController2D : NetworkBehaviour
             if (isClient)
             {
                 Fire(new Vector2(1.0f, 0.0f), true);
+            } else if (isServer) {
+                RpcFire(new Vector2(1.0f, 0.0f), true);
             }
         }
 
         if (Input.GetButtonDown(PC2D.Input.DASH))
         {
-            // _motor.Dash();
+            if (isClient)
+            {
+                _motor.Dash();
+            }
             CmdDoDash();
         }
 
@@ -164,10 +175,21 @@ public class NetworkController2D : NetworkBehaviour
         syncPos = pos;
     }
 
+    void HorizontalMovement(float dx)
+    {
+        _motor.normalizedXMovement = dx;
+    }
+
     [Command]
     void CmdHorizontalMovement(float dx)
     {
-        _motor.normalizedXMovement = dx;
+        HorizontalMovement(dx);
+    }
+
+    [ClientRpc]
+    void RpcHorizontalMovement(float dx)
+    {
+        HorizontalMovement(dx);
     }
 
     [Command]
@@ -248,6 +270,30 @@ public class NetworkController2D : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    void RpcFire(Vector2 direction, bool keyboard)
+    {
+        if (++_fireCooldown % 10 == 0 || keyboard)
+        {
+            GameObject obj = _bulletPoll.GetComponent<PoolSystem>().GetObject();
+            obj.SetActive(true);
+
+            obj.transform.position = _playerTransform.transform.position;
+
+            Bullet bulletScript = obj.GetComponent<Bullet>();
+            bulletScript.direction = direction;
+
+            // Rotate the x axis
+            bulletScript.Rotate =
+                direction.x * (direction.x > 0.0f ? 0.0f : -180.0f);
+            // Rotate the y axis
+            bulletScript.Rotate =
+                direction.y * (direction.x > 0.0f ? 90.0f : -90.0f);
+
+            StartCoroutine(ResetBullet(5.0f, obj));
+        }
+    }
+
     [Command]
     void CmdAddBullet(GameObject bullet)
     {
@@ -267,7 +313,7 @@ public class NetworkController2D : NetworkBehaviour
 
         // CmdReset(obj);
         Bullet script = obj.GetComponent<Bullet>();
-        script.CmdResetBullet();
+        script.ResetBullet();
         _bulletPoll.GetComponent<PoolSystem>().DestroyObjectPool(obj);
     }
 
