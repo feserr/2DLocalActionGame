@@ -124,8 +124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea4b8dc7b5413644b09095d12fe2634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onlineStatus: 
-  isAtStartup: 1
 --- !u!114 &11489614
 MonoBehaviour:
   m_ObjectHideFlags: 1

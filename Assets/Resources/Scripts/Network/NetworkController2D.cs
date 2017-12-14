@@ -20,7 +20,6 @@ public class NetworkController2D : NetworkBehaviour
 
     private Transform _playerTransform;
     private PlatformerMotor2D _motor;
-    private Joystick _joystickRight;
     private float _dx = 0.0f;
     private GameObject _bulletPoll;
 
@@ -31,8 +30,6 @@ public class NetworkController2D : NetworkBehaviour
     {
         _playerTransform = GetComponent<Transform>();
         _motor = GetComponent<PlatformerMotor2D>();
-        _joystickRight = GameObject.Find("RightMobileJoystick")
-            .GetComponent<Joystick>();
 
         _bulletPoll = new GameObject("BulletPoll");
         _bulletPoll.AddComponent<PoolSystem>();
@@ -76,7 +73,7 @@ public class NetworkController2D : NetworkBehaviour
         }
         else if (Mathf.Abs(
             CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYHORIZONTAL)) >
-                GameGlobals.JOY_THRESHOLD)
+            GameGlobals.JOY_THRESHOLD)
         {
             //_motor.normalizedXMovement =
             //    CrossPlatformInputManager.GetAxis(GameGlobals.LEFTJOYHORIZONTAL);
@@ -177,41 +174,48 @@ public class NetworkController2D : NetworkBehaviour
     [Command]
     void CmdProvidePositionToServer(Vector3 pos)
     {
+        return;
         syncPos = pos;
     }
 
     void HorizontalMovement(float dx)
     {
+        return;
         _motor.normalizedXMovement = dx;
     }
 
     [Command]
     void CmdHorizontalMovement(float dx)
     {
+        return;
         HorizontalMovement(dx);
     }
 
     [ClientRpc]
     void RpcHorizontalMovement(float dx)
     {
+        return;
         HorizontalMovement(dx);
     }
 
     [Command]
     void CmdStopMovement()
     {
+        return;
         _dx = 0.0f;
     }
 
     [Command]
     void CmdDoJump()
     {
+        return;
         _motor.Jump();
     }
 
     [Command]
     void CmdJumpHeld()
     {
+        return;
         _motor.jumpingHeld = (Input.GetButton(PC2D.Input.JUMP) ||
             CrossPlatformInputManager.GetButton("Jump"));
     }
@@ -219,12 +223,14 @@ public class NetworkController2D : NetworkBehaviour
     [Command]
     void CmdFallFast(bool fall)
     {
+        return;
         _motor.fallFast = fall;
     }
 
     [Command]
     void CmdDoDash()
     {
+        return;
         _motor.Dash();
     }
 
@@ -309,6 +315,7 @@ public class NetworkController2D : NetworkBehaviour
     [Client]
     void SyncPositionValues(Vector3 latestPos)
     {
+        return;
         syncPos = latestPos;
     }
 

@@ -22,10 +22,10 @@ GameObject:
   - component: {fileID: 212548309399164432}
   - component: {fileID: 61413425314637202}
   - component: {fileID: 114332365783627652}
+  - component: {fileID: 114981493653144702}
   - component: {fileID: 114279616268468522}
   - component: {fileID: 114680680215951042}
-  - component: {fileID: 114692465204845092}
-  - component: {fileID: 114917056409133706}
+  - component: {fileID: 114090941044235152}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -71,13 +71,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.5}
   m_EdgeRadius: 0
+--- !u!114 &114090941044235152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1885107376873078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 361c96c4c974c3d489bc71f54050227c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114279616268468522
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1885107376873078}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0d522286c13b9ff41b33ba3ff16074d5, type: 3}
   m_Name: 
@@ -178,23 +189,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1885107376873078}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a1abd016cfdca4af5887a319dbc7038d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114692465204845092
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1885107376873078}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 361c96c4c974c3d489bc71f54050227c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114917056409133706
+--- !u!114 &114981493653144702
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -202,11 +202,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 1885107376873078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86b6999abdff4e545a965728e79ac44e, type: 3}
+  m_Script: {fileID: 11500000, guid: cbdf5a6b1cc27d74cab63a5666d2960a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputBufferSize: 5
-  interpolationDelay: 10
+  sendEveryXTick: 3
+  rewindHitLayers:
+    serializedVersion: 2
+    m_Bits: 768
+  rewindGO: {fileID: 0}
+  autoKinematic: 1
+  rootPosSync: 1
+  includeXYZ:
+    x: 1
+    y: 1
+    z: 0
+  sendCulling: 0
+  keyEvery: 6
+  extrapolation: 0.5
+  teleportThreshold: 1
+  cullUpperBits: 0
+  sequentialKeys: 5
+  positionElements: []
+  rotationElements:
+  - isRoot: 0
+    nst: {fileID: 0}
+    elementType: 1
+    sendCulling: 2
+    keyRate: 5
+    gameobject: {fileID: 0}
+    extrapolation: 0.5
+    rewindGO: {fileID: 0}
+    lastSentKeyTime: 0
+    snapshotTime: 0
+    rotationType: 15
+    totalBitsForQuat: 40
+    xBits: 11
+    xLimitRange: 0
+    xMinValue: 0
+    xMaxValue: 360
+    yBits: 10
+    yLimitRange: 1
+    yMinValue: -90
+    yMaxValue: 90
+    zBits: 10
+    zLimitRange: 0
+    zMinValue: -90
+    zMaxValue: 90
+    xyzBits: 
+    xyzLimit: 
+    xyzMin: []
+    xyzMax: []
+    xyzRange: []
+    xyzMult: []
+    xyzUnmult: []
+    xyzWrappoint: []
+    useLocal: 0
+  debugXform: 0
+  debugXformGO: {fileID: 0}
+  rb: {fileID: 0}
+  NI: {fileID: 0}
 --- !u!212 &212548309399164432
 SpriteRenderer:
   m_ObjectHideFlags: 1
